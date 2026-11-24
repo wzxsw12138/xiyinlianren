@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fbf7f2">
+<title>测一测｜你容易吸引什么样的恋人</title>
+<style>
+:root{
+  --ink:#3f3439;
+  --muted:#8a7b82;
+  --line:#f0e2e6;
+  --accent:#d8908a;
+  --accent-2:#b393c8;
+  --card:rgba(255,255,255,.76);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  color:var(--ink);
+  background:#fbf7f2;
+  min-height:100dvh;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+[hidden]{display:none !important}
+
+/* ===== 背景光斑 ===== */
+.bg{
+  position:fixed;inset:0;z-index:0;overflow:hidden;
+  background:
+    radial-gradient(1200px 800px at 8% -10%, #ffe9dd 0%, rgba(255,233,221,0) 62%),
+    radial-gradient(900px 700px at 96% 2%, #ecdff5 0%, rgba(236,223,245,0) 60%),
+    radial-gradient(900px 900px at 50% 108%, #dfeaf2 0%, rgba(223,234,242,0) 62%),
+    #fbf7f2;
+}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;will-change:transform}
+.b1{width:340px;height:340px;background:#ffd9c9;left:-120px;top:8%;animation:drift 19s ease-in-out infinite}
+.b2{width:300px;height:300px;background:#e6d2f2;right:-110px;top:26%;animation:drift 23s ease-in-out infinite reverse}
+.b3{width:380px;height:380px;background:#d6e6ef;left:35%;bottom:-180px;animation:drift 25s ease-in-out infinite}
+@keyframes drift{
+  0%,100%{transform:translate3d(0,0,0) scale(1)}
+  50%{transform:translate3d(24px,-28px,0) scale(1.06)}
+}
+
+/* ===== 外壳 ===== */
+.stage{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;min-height:100dvh;padding:22px 16px}
+.sheet{width:100%;max-width:560px;margin:auto}
+.card{
+  background:var(--card);
+  backdrop-filter:blur(20px) saturate(130%);
+  -webkit-backdrop-filter:blur(20px) saturate(130%);
+  border:1px solid rgba(255,255,255,.94);
+  border-radius:26px;
+  padding:30px 26px 26px;
+  box-shadow:0 26px 60px -36px rgba(120,88,96,.5), 0 2px 10px rgba(120,88,96,.05);
+}
+
+/* ===== 启动页 ===== */
+.eyebrow{margin:0 0 14px;font-size:10.5px;letter-spacing:.26em;color:#b7a1a9}
+h1{margin:0;font-size:clamp(29px,7.6vw,40px);line-height:1.4;font-weight:700;letter-spacing:.01em}
+h1 .top{display:block;font-size:.46em;font-weight:600;letter-spacing:.18em;color:var(--muted);margin-bottom:12px}
+h1 .sep{display:inline-block;width:2px;height:.86em;border-radius:2px;background:#cf9fa8;margin-left:9px;vertical-align:-.06em}
+h1 em{font-style:normal;color:#c27f79}
+@supports ((background-clip:text) or (-webkit-background-clip:text)){
+  h1 em{background:linear-gradient(118deg,#cc7f74 10%,#a97fc0 88%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+}
+.lead{margin:18px 0 0;font-size:14.5px;line-height:1.9;color:#75666e}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:20px 0 26px;font-size:12px;color:#9b8791}
+.meta span{padding:6px 11px;border-radius:99px;background:rgba(255,255,255,.72);border:1px solid var(--line)}
+.note{margin:14px 0 0;font-size:11.5px;color:#b3a0a8;text-align:center;letter-spacing:.02em}
+
+.btn{
+  width:100%;border:0;cursor:pointer;font-family:inherit;
+  font-size:16.5px;font-weight:600;letter-spacing:.02em;color:#fff;
+  background:linear-gradient(135deg,#e4a29a 0%,#bd97cc 100%);
+  border-radius:999px;padding:16px;
+  box-shadow:0 14px 26px -14px rgba(180,120,140,.72);
+  transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 20px 32px -16px rgba(180,120,140,.8)}
+.btn:active{transform:translateY(0) scale(.99)}
+.btn:focus-visible{outline:2px solid #d9a7a0;outline-offset:3px}
+.btn.ghost{
+  background:rgba(255,255,255,.86);color:#8a6f7a;border:1px solid #e8d3da;
+  box-shadow:0 8px 18px -14px rgba(150,110,125,.5);
+}
+.btn.ghost:hover{background:#fff}
+
+/* ===== 答题页 ===== */
+.topbar{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:#a2909a;margin-bottom:10px}
+.back{border:0;background:none;font-family:inherit;font-size:12px;color:#9a8791;cursor:pointer;padding:4px 2px;visibility:hidden}
+.back:hover{color:#7f6b76}
+.back.show{visibility:visible}
+.bar{height:6px;border-radius:99px;background:#f4e7ea;overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#e8ac9f,#c09ad3);transition:width .38s cubic-bezier(.3,.8,.3,1)}
+.qhead{display:flex;align-items:baseline;gap:10px;margin:24px 0 6px}
+.qnum{font-size:11px;letter-spacing:.18em;color:#c0a6ae}
+.qtext{margin:0 0 20px;font-size:clamp(18px,4.7vw,21px);line-height:1.66;font-weight:600;letter-spacing:.01em}
+.options{margin:0}
+.option{
+  display:flex;align-items:center;gap:12px;width:100%;text-align:left;
+  background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:16px;
+  padding:13px 15px;margin:0 0 10px;
+  font-family:inherit;font-size:15px;line-height:1.55;color:var(--ink);cursor:pointer;
+  transition:transform .16s ease, border-color .16s ease, background .16s ease, box-shadow .16s ease;
+}
+.option .tag{
+  flex:none;width:26px;height:26px;border-radius:50%;
+  background:#f8edf0;color:#bb929e;font-size:12px;font-weight:600;
+  display:grid;place-items:center;transition:background .16s ease,color .16s ease;
+}
+.option .txt{flex:1;min-width:0}
+.option .tick{
+  flex:none;width:18px;height:18px;border-radius:50%;
+  background:linear-gradient(135deg,#e4a29a,#bd97cc);
+  color:#fff;font-size:11px;line-height:1;
+  display:grid;place-items:center;
+  opacity:0;transform:scale(.8);
+  transition:opacity .16s ease, transform .16s ease;
+}
+.option .tick::before{content:"✓"}
+.option:hover{border-color:#e6c3c5;background:#fff;transform:translateX(2px)}
+.option.sel{border-color:#dda6a0;background:linear-gradient(135deg,#fff6f2,#faf1fb);box-shadow:0 10px 22px -16px rgba(190,130,140,.75)}
+.option.sel .tag{background:linear-gradient(135deg,#e4a29a,#bd97cc);color:#fff}
+.option.sel .tick{opacity:1;transform:scale(1)}
+.option:active{transform:scale(.985)}
+#submitBtn{margin-top:6px}
+.qfoot{margin:16px 0 0;font-size:11.5px;color:#b5a3aa;text-align:center}
+.fade{animation:fadeUp .38s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ===== 结果页 ===== */
+.pill{display:inline-flex;align-items:center;gap:7px;font-size:11px;letter-spacing:.16em;color:#a8848f;padding:7px 12px;border-radius:99px;background:rgba(255,255,255,.8);border:1px solid #eddcdf}
+.pill::before{content:"";width:5px;height:5px;border-radius:50%;background:linear-gradient(135deg,#e4a29a,#bd97cc)}
+.res-head{
+  text-align:center;margin-top:14px;padding:22px 16px 18px;
+  border-radius:20px;border:1px solid #f6e7e6;
+  background:linear-gradient(160deg,#fffaf6 0%,#fbf3fa 100%);
+}
+.res-en{margin:16px 0 2px;font-size:10px;letter-spacing:.28em;color:#bc9fa9;text-transform:uppercase}
+.res-name{margin:0;font-size:clamp(30px,8vw,38px);font-weight:700;letter-spacing:.02em;line-height:1.25}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:14px 0 0}
+.chip{font-size:11.5px;padding:7px 11px;border-radius:99px;background:rgba(255,255,255,.84);border:1px solid var(--line);color:#7f6b76;letter-spacing:.01em}
+.block{border-top:1px solid var(--line);margin-top:18px;padding-top:16px}
+.block h3{margin:0 0 9px;font-size:12px;font-weight:600;letter-spacing:.1em;color:#9a838c;display:flex;align-items:center;gap:8px}
+.block h3::before{content:"";width:6px;height:6px;border-radius:50%;background:#dba9a4}
+.block p{margin:0;font-size:15px;line-height:1.92;color:#463a40}
+.slogan{
+  margin:22px 0 0;padding:18px 18px;border-radius:18px;text-align:center;
+  background:linear-gradient(135deg,#fdf1eb 0%,#f8eff8 100%);
+  border:1px solid #f2e2e3;
+  font-size:16px;font-weight:600;line-height:1.75;color:#8a5f60;letter-spacing:.02em;
+}
+.actions{display:flex;gap:10px;margin-top:18px}
+.actions .btn{font-size:15px;padding:14px}
+.actions .btn.small{flex:1.15}
+.actions .btn.ghost{flex:1}
+.tiny{margin:16px 0 0;font-size:11px;color:#b6a3ab;text-align:center;line-height:1.8}
+
+/* ===== 加载层 ===== */
+.loading{position:fixed;inset:0;z-index:30;display:grid;place-items:center;background:rgba(251,247,242,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.loading .box{text-align:center;padding:0 24px}
+.loading p{margin:0 0 4px;font-size:14.5px;color:#8a7680;letter-spacing:.02em}
+.loading small{font-size:11px;color:#bfa9b2}
+.dots{display:flex;justify-content:center;gap:6px;margin:18px 0 10px}
+.dots i{width:6px;height:6px;border-radius:50%;background:linear-gradient(135deg,#e4a29a,#bd97cc);animation:bounce 1s ease-in-out infinite}
+.dots i:nth-child(2){animation-delay:.16s}
+.dots i:nth-child(3){animation-delay:.32s}
+@keyframes bounce{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(-6px);opacity:1}}
+
+/* ===== 响应式 ===== */
+@media (max-width:420px){
+  .card{padding:24px 18px 22px;border-radius:22px}
+  .stage{padding:16px 12px}
+  .option{font-size:14.5px;padding:12px 13px}
+  .actions{flex-direction:column}
+  .actions .btn{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important}
+}
+</style>
+</head>
+<body>
+
+<div class="bg">
+  <span class="blob b1"></span>
+  <span class="blob b2"></span>
+  <span class="blob b3"></span>
+</div>
+
+<main class="stage">
+  <div class="sheet">
+
+    <!-- ===== 视图：启动页 ===== -->
+    <section id="view-start" class="card">
+      <p class="eyebrow">LOVE MAGNET TEST</p>
+      <h1>
+        <span class="top">测一测<span class="sep"></span></span>
+        你容易吸引<br><em>什么样的恋人</em>
+      </h1>
+      <p class="lead">
+        不用分析，也不用懂心理学。<br>
+        24 个日常生活里的小选择，帮你拼出自己在恋爱中的磁场——<br>
+        以及，最后会被你吸引的那个人。
+      </p>
+      <div class="meta">
+        <span>24 道题</span>
+        <span>大约 3 分钟</span>
+        <span>没有标准答案</span>
+      </div>
+      <button class="btn" id="startBtn">开始测试</button>
+      <p class="note">结果仅供娱乐，但通常会准得让人沉默三秒</p>
+    </section>
+
+    <!-- ===== 视图：答题页 ===== -->
+    <section id="view-quiz" class="card" hidden>
+      <div class="topbar">
+        <button class="back" id="backBtn">‹ 上一题</button>
+        <span id="stepText">1 / 24</span>
+      </div>
+      <div class="bar"><i id="barFill"></i></div>
+      <div class="qhead"><span class="qnum" id="qnum">Q1</span></div>
+      <h2 class="qtext" id="qtext"></h2>
+      <div class="options" id="options"></div>
+      <button class="btn" id="submitBtn" hidden>看看我会吸引谁</button>
+      <p class="qfoot" id="qfoot">选完会自动进入下一题，凭第一反应就好</p>
+    </section>
+
+    <!-- ===== 视图：结果页 ===== -->
+    <section id="view-result" class="card" hidden>
+      <div class="res-head">
+        <span class="pill">你的恋爱磁场</span>
+        <p class="res-en" id="resEn"></p>
+        <h2 class="res-name" id="resName"></h2>
+        <div class="chips" id="resChips"></div>
+      </div>
+
+      <div class="block">
+        <h3>你会吸引什么样的恋人</h3>
+        <p id="resWho"></p>
+      </div>
+      <div class="block">
+        <h3>为什么是你</h3>
+        <p id="resWhy"></p>
+      </div>
+      <div class="block">
+        <h3>隐藏特质 &amp; 小彩蛋</h3>
+        <p id="resEgg"></p>
+      </div>
+
+      <div class="slogan" id="resSlogan"></div>
+
+      <div class="actions">
+        <button class="btn small" id="copyBtn">复制这句 slogan</button>
+        <button class="btn ghost" id="retestBtn">重新测一次</button>
+      </div>
+      <p class="tiny">把结果发给那个最懂你的人，<br>顺便问一句：你在恋爱里，容易吸引谁？</p>
+    </section>
+
+  </div>
+</main>
+
+<div class="loading" id="loading" hidden>
+  <div class="box">
+    <div class="dots"><i></i><i></i><i></i></div>
+    <p>正在把你的 24 个选择，拼成一个人</p>
+    <small>稍微等一下，这次不猜</small>
+  </div>
+</div>
+
+<script>
+// ===== 计分逻辑（纯函数） =====
+const DIMS = ['a','v','s','c','o','b','r'];
+
+// a=在意回应  v=需要空间  s=主动表达  c=照顾付出  o=开放好奇  b=边界柔软  r=稳定务实
+const QUESTIONS = [
+  { q:'搬家时只能额外带一件「其实没什么用」的东西，你会带：',
+    opts:[
+      {t:'盖了很多年的旧毯子', w:{c:1,r:1}},
+      {t:'一箱一直没看完的书', w:{o:1,v:1}},
+      {t:'一张过期很久的车票', w:{o:1,b:1}},
+      {t:'存满旧聊天记录的坏手机', w:{a:1,b:1}}
+    ]},
+  { q:'突然空出一整天，你的第一反应是：',
+    opts:[
+      {t:'先问一圈谁有空，约上人再说', w:{s:1,o:1}},
+      {t:'睡到自然醒，剩下的到时候看', w:{v:1,o:1}},
+      {t:'一个人去看展，或者看场电影', w:{v:1,r:1}},
+      {t:'把家里彻底收拾一遍', w:{c:1,r:1}}
+    ]},
+  { q:'如果你的情绪是一种天气，别人一进门就能感觉到，你常年是：',
+    opts:[
+      {t:'大晴天，偶尔来一场阵雨', w:{s:1,r:1}},
+      {t:'恒温多云，待着很舒服', w:{r:1,c:1}},
+      {t:'梅雨季，细细的，一直在下', w:{a:1,b:1}},
+      {t:'说变就变，全看当天风往哪吹', w:{a:1,s:1}}
+    ]},
+  { q:'别人最容易记住你的：',
+    opts:[
+      {t:'笑声', w:{s:1,o:1}},
+      {t:'说话时的语气', w:{c:1,b:1}},
+      {t:'眼神里的那点分寸感', w:{v:1,r:1}},
+      {t:'突然的沉默', w:{a:1,v:1}}
+    ]},
+  { q:'恋爱里可以删掉一个环节，你会删：',
+    opts:[
+      {t:'暧昧期没完没了的互相试探', w:{a:1,s:1}},
+      {t:'吵架之后的那场冷战', w:{c:1,r:1}},
+      {t:'每天必须报备行程', w:{v:1,s:1}},
+      {t:'分开时的那场告别', w:{v:1,b:1}}
+    ]},
+  { q:'你走进一栋房子，墙上写着「这里没有回应，但你可以随时说话」：',
+    opts:[
+      {t:'试着说两句，等一个回声', w:{a:1,s:1}},
+      {t:'安静待着，这样也挺好', w:{v:1,r:1}},
+      {t:'先找出口，规则一定有漏洞', w:{s:1,o:1}},
+      {t:'把房间整理一遍，让它像个家', w:{c:1,r:1}}
+    ]},
+  { q:'人生是场游戏，你最先加满的技能点是：',
+    opts:[
+      {t:'读空气', w:{a:1,b:1}},
+      {t:'好好说话', w:{c:1,r:1}},
+      {t:'一个人也能玩得开心', w:{v:1,o:1}},
+      {t:'让人第一眼就喜欢我', w:{s:1,o:1}}
+    ]},
+  { q:'补全：「那天他迟到了四十分钟，我______」',
+    opts:[
+      {t:'笑着说没事，心里默默记了一笔', w:{b:1,a:1}},
+      {t:'先问他路上是不是出什么事了', w:{c:1,r:1}},
+      {t:'自己先点菜，吃完再说', w:{v:1,o:1}},
+      {t:'直接说「要不改天吧」', w:{s:1,v:1}}
+    ]},
+  { q:'你更喜欢哪种关系的形状：',
+    opts:[
+      {t:'两棵树，根连着，枝叶各自生长', w:{v:1,r:1}},
+      {t:'两个重叠的圆，中间那块最深', w:{a:1,c:1}},
+      {t:'一条河和一座桥，来回都能走', w:{c:1,s:1}},
+      {t:'两条平行线，偶尔交叉一下', w:{v:1,o:1}}
+    ]},
+  { q:'这四样里，你最舍不得放手的是：',
+    opts:[
+      {t:'被理解', w:{a:1,c:1}},
+      {t:'自由', w:{v:1,o:1}},
+      {t:'被需要', w:{c:1,b:1}},
+      {t:'被喜欢', w:{s:1,o:1}}
+    ]},
+  { q:'如果能把一段关系存进 U 盘，你会存：',
+    opts:[
+      {t:'刚认识那十分钟', w:{s:1,o:1}},
+      {t:'吵架后他先低头的那一句', w:{c:1,r:1}},
+      {t:'两个人一起沉默的两小时', w:{v:1,o:1}},
+      {t:'他默默替你做的那些小事', w:{c:1,a:1}}
+    ]},
+  { q:'群里有人说「这个忙只有你能帮」，你会：',
+    opts:[
+      {t:'先答应，再想时间怎么挤出来', w:{b:1,c:1}},
+      {t:'问清楚要做什么再决定', w:{r:1,s:1}},
+      {t:'说「我这两天排满了」', w:{v:1,s:1}},
+      {t:'心里有点烦，但还是接了', w:{b:1,a:1}}
+    ]},
+  { q:'恋爱里你最受不了的是：',
+    opts:[
+      {t:'消息很久才回', w:{a:1,s:1}},
+      {t:'什么事都要一起做', w:{v:1,r:1}},
+      {t:'一不高兴就冷着脸', w:{a:1,b:1}},
+      {t:'永远等我先开口', w:{s:1,v:1}}
+    ]},
+  { q:'分手之后，最可能让你回头的一句话是：',
+    opts:[
+      {t:'「我改，我真的会改」', w:{c:1,b:1}},
+      {t:'「只有你懂我」', w:{c:1,a:1}},
+      {t:'「我们不该这样结束」', w:{a:1,s:1}},
+      {t:'没有哪一句，我不会回头', w:{v:1,s:1}}
+    ]},
+  { q:'喜欢的人只回了一个「嗯」，你会：',
+    opts:[
+      {t:'换个话题，再试一次', w:{s:1,o:1}},
+      {t:'先停一下，等他想说再说', w:{v:1,a:1}},
+      {t:'直接问「你是不是不高兴」', w:{a:1,s:1}},
+      {t:'发个表情包，把气氛接回来', w:{s:1,b:1}}
+    ]},
+  { q:'你的恋爱像哪种收纳方式：',
+    opts:[
+      {t:'分门别类，标签贴得清清楚楚', w:{r:1,v:1}},
+      {t:'全塞进一个箱子，眼不见为净', w:{v:1,a:1}},
+      {t:'常常翻出来重看一遍', w:{a:1,b:1}},
+      {t:'定期清空，重新开始', w:{s:1,o:1}}
+    ]},
+  { q:'有个按钮，按下去能看到对方此刻在想你多少：',
+    opts:[
+      {t:'每天按一次', w:{a:1,b:1}},
+      {t:'只在不安的时候按', w:{a:1,c:1}},
+      {t:'不按，知道了就不好玩了', w:{v:1,o:1}},
+      {t:'递给他，让他先按', w:{s:1,b:1}}
+    ]},
+  { q:'补全：「朋友问我为什么不谈恋爱，我说______」',
+    opts:[
+      {t:'「没遇到让我想靠近的人」', w:{v:1,o:1}},
+      {t:'「太麻烦了」', w:{v:1,r:1}},
+      {t:'「我想要那种不用猜的关系」', w:{a:1,s:1}},
+      {t:'「我随时可以，只是还没开始」', w:{s:1,o:1}}
+    ]},
+  { q:'哪种声音最容易打动你：',
+    opts:[
+      {t:'有人很认真地叫你的名字', w:{c:1,a:1}},
+      {t:'深夜里那句「我在」', w:{a:1,b:1}},
+      {t:'一句把你逗笑的玩笑', w:{s:1,o:1}},
+      {t:'沉默里的呼吸声', w:{v:1,o:1}}
+    ]},
+  { q:'只允许你保留一种「被爱的方式」，你选：',
+    opts:[
+      {t:'他记得你说过的小事', w:{c:1,r:1}},
+      {t:'每天都有说不完的话', w:{s:1,a:1}},
+      {t:'需要的时候他一定在', w:{a:1,c:1}},
+      {t:'各自忙，偶尔交汇', w:{v:1,o:1}}
+    ]},
+  { q:'电梯上贴着「本电梯只停靠你愿意去的那一层」，你按了：',
+    opts:[
+      {t:'有人在等我的那一层', w:{a:1,b:1}},
+      {t:'从来没去过的顶楼', w:{s:1,o:1}},
+      {t:'我自己房间那层', w:{v:1,r:1}},
+      {t:'一楼，随时能走', w:{v:1,a:1}}
+    ]},
+  { q:'如果这世上只允许一个人记得你，你希望他记住的是：',
+    opts:[
+      {t:'你为他做过的那些小事', w:{c:1,b:1}},
+      {t:'你一直没说出口的那句话', w:{v:1,a:1}},
+      {t:'你们吵完之后一起吃的那顿饭', w:{s:1,c:1}},
+      {t:'你一个人也过得很好的样子', w:{v:1,r:1}}
+    ]},
+  { q:'如果这段关系可以像游戏一样存档，你最想存下哪个瞬间：',
+    opts:[
+      {t:'吵完架、又和好的那一刻', w:{c:1,r:1}},
+      {t:'他第一次主动靠近你的时候', w:{s:1,a:1}},
+      {t:'一个人待着、也不用解释的那些晚上', w:{v:1,o:1}},
+      {t:'没什么特别、但想起来会笑的日常', w:{a:1,b:1}}
+    ]},
+  { q:'一个周末的理想分配是：',
+    opts:[
+      {t:'一半给他，一半给自己', w:{r:1,c:1}},
+      {t:'全都给他', w:{a:1,c:1}},
+      {t:'全都给自己，抽空见一面', w:{v:1,o:1}},
+      {t:'谁先提就去，都行', w:{s:1,o:1}}
+    ]}
+];
+
+const RESULTS = {
+  harbor:{
+    name:'恒温港湾', en:'THE HARBOR',
+    who:'你容易吸引那种「在外面撑了一整天、回来只想把重量放下」的人。他未必会说漂亮话，但会记得你随口提过的小事。',
+    why:'你身上有种让人放松的本事：不追问、不冷场、也不让人难堪。你给的是「你可以不完美」，所以靠近你的，往往是已经累了很久的人。',
+    egg:'隐藏技能是「避风港体质」——猫、小孩、刚失恋的朋友，都自动往你身上贴。小彩蛋：你其实也很想有人问你一句「那你呢」。',
+    slogan:'你是别人的岸，也值得有人为你靠岸。'
+  },
+  sun:{
+    name:'人间小太阳', en:'THE SUN',
+    who:'你吸引的是那种安静、慢热、需要被带一下的人。他一开始只是被你的亮度照到，后来慢慢学会主动。',
+    why:'你不太内耗，情绪来得快去得也快，跟你在一起的人不用猜。你的稳定不是没情绪，是情绪不往别人身上砸。',
+    egg:'你的电量靠独处回充：笑是给别人的，静音是留给自己的。小彩蛋：总有人以为你们已经很熟。',
+    slogan:'你负责发光，也值得有人负责给你充电。'
+  },
+  explorer:{
+    name:'同频探险家', en:'THE FELLOW TRAVELLER',
+    who:'你会吸引脑子里装着一堆怪想法、终于遇到愿意接住的人。他不当你的观众，他想当你的同伙。',
+    why:'你对世界的好奇，大过对答案的执着。你能把「没做过」说成「试试看」，这种松弛感对爱探索的人很有杀伤力。',
+    egg:'相册里百分之七十是奇怪的东西：影子、云、别人不会拍的第二眼。小彩蛋：你对「无聊」的忍耐度，低到离谱。',
+    slogan:'你不是谁的目的地，你是同路人。'
+  },
+  healer:{
+    name:'治愈系补给站', en:'THE HEALER',
+    who:'你容易吸引习惯「先热后冷」、需要被理解被照顾的人。开头他说你温柔，后来他说你想太多。',
+    why:'你习惯在关系里当先低头的那一个：怕失去，所以先付出；在意回应，所以总在揣摩。你吸引的不是坏人，是习惯了被照顾的人。',
+    egg:'手机里有一条没发出去的草稿，写了很长。小彩蛋：你的「没事」，通常等于「很有事」。',
+    slogan:'你很会照顾人，这次把那份细心留一点给自己。'
+  },
+  spark:{
+    name:'直球小火苗', en:'THE SPARK',
+    who:'先被你的坦率击中的，是那种享受被爱、却没打算同等回应的人；也可能是永远慢半拍、反而让你更想追的人。',
+    why:'你的喜欢藏不住，也不打算藏。你给得快、给得满，所以总比对方先走到下一步——这不是你的错，是节奏差。',
+    egg:'你删过对话框，又重新打过同一句话。小彩蛋：你说「随便」的时候，其实心里早就有答案。',
+    slogan:'你的直球很贵，别投给接不住的人。'
+  },
+  slow:{
+    name:'慢慢热的猫', en:'THE SLOW BURN',
+    who:'你吸引主动、热情、喜欢把关系往前推的人；也容易遇到习惯替你做决定、顺便安排你生活的人。',
+    why:'你不轻易表态，但心里早有一整套评估。你越安静，对方越想知道你在想什么。你的好感都藏在细节里，所以会吸引愿意花力气猜你的人。',
+    egg:'你回消息很慢，但每条都在心里改了三遍。小彩蛋：你的沉默不是没兴趣，是在等一个安全的信号。',
+    slogan:'你不急着开门，但门后是很软的一个人。'
+  },
+  moon:{
+    name:'清冷月亮', en:'THE MOON',
+    who:'你吸引的是被距离感勾住、总想再走近一点的人；还有和你一样需要空间的同类。',
+    why:'你自我消化的能力太强，别人很难找到「被你需要」的位置。你不是不在乎，是把在乎放在了不打扰里。',
+    egg:'你的「我没事」是真没事，只是不想再解释一遍。小彩蛋：有人以为你高冷，其实你心里已经演完一整部剧。',
+    slogan:'你不需要谁来完成你，但可以有人陪你看月亮。'
+  },
+  steady:{
+    name:'靠谱大人', en:'THE STEADY ONE',
+    who:'你吸引想安顿下来、需要一个「说到做到」的人；也可能遇到把生活整个交给你打理的人。',
+    why:'你的爱是功能性的：解决问题、安排行程、准时出现。你不太说想念，但会把他的事默默记进日程里。',
+    egg:'备忘录里有他的忌口、尺码，和某个不能忘的日子。小彩蛋：被夸「靠谱」的时候，你有一点点想反驳。',
+    slogan:'你的爱不响，但很结实。'
+  },
+  tide:{
+    name:'潮汐体质', en:'THE TIDE',
+    who:'你吸引情绪浓度高、需要反复确认的人。你们的关系像潮水：靠近，退开，再来一次。',
+    why:'你一边想被抱紧，一边怕被看穿。你会先给很多，再突然收回——这种张弛，会吸引同样不安的人，也容易被擅长拉扯的人拿捏。',
+    egg:'同一个人，你删过又重新加回来。小彩蛋：你的「算了」后面，通常跟着一整晚的复盘。',
+    slogan:'你不是难搞，你只是还没遇到不用试探的关系。'
+  },
+  volt:{
+    name:'高浓度拉扯体', en:'THE HIGH VOLTAGE',
+    who:'你吸引敢跟你吵、也敢跟你好的人；或者同样一点就着、爱得很用力的人。',
+    why:'你不冷处理，你要的是当下的回应。所以你的关系很少有温吞的中间地带——要么很近，要么很响。',
+    egg:'你的聊天记录像连续剧，起承转合样样齐全。小彩蛋：你其实很好哄，一句软话就能把你拉回来。',
+    slogan:'你爱得很响，值得一个也敢回应的人。'
+  }
+};
+
+const ATT_LABEL = {secure:'安全型', anxious:'焦虑型', avoid:'回避型', fear:'矛盾型'};
+
+function computeScores(answers){
+  const raw = {a:0,v:0,s:0,c:0,o:0,b:0,r:0};
+  const denom = {a:0,v:0,s:0,c:0,o:0,b:0,r:0};
+  QUESTIONS.forEach(function(q, qi){
+    const picked = q.opts[answers[qi]];
+    DIMS.forEach(function(d){
+      // 该题只要有一个选项带这个维度，就算一次机会
+      if(q.opts.some(function(o){ return o.w[d]; })) denom[d]++;
+    });
+    if(!picked) return;
+    DIMS.forEach(function(d){ if(picked.w[d]) raw[d] += picked.w[d]; });
+  });
+  const n = {};
+  DIMS.forEach(function(d){ n[d] = denom[d] ? raw[d] / denom[d] : 0; });
+  return {raw:raw, denom:denom, n:n};
+}
+
+function computeResult(answers){
+  const n = computeScores(answers).n;
+  const BASE = 0.35;
+  let att;
+  if(n.a - BASE > 0.03 && n.v - BASE > 0.03) att = 'fear';
+  else if(n.a - BASE > 0.075) att = 'anxious';
+  else if(n.v - BASE > 0.075) att = 'avoid';
+  else att = 'secure';
+
+  // 同一种依恋倾向内部，按最突出的那一种气质细分
+  let key;
+  if(att === 'secure'){
+    const cands = [['explorer', n.o], ['sun', n.s], ['harbor', n.c]];
+    cands.sort(function(x, y){ return y[1] - x[1]; });
+    key = (cands[0][1] - cands[1][1] < 0.03) ? 'harbor' : cands[0][0];
+  } else if(att === 'anxious'){
+    key = (n.c >= 0.5 && n.c >= n.s) ? 'healer'
+        : (n.s >= 0.5 ? 'spark' : 'slow');
+  } else if(att === 'avoid'){
+    key = (n.r >= 0.5 ? 'steady' : 'moon');
+  } else {
+    key = (n.s >= 0.33 ? 'volt' : 'tide');
+  }
+  return {key:key, att:att, n:n};
+}
+
+// ===== 页面逻辑 =====
+(function(){
+  const state = {i:0, answers:new Array(QUESTIONS.length).fill(null), locked:false, resultKey:'harbor'};
+
+  const $ = function(id){ return document.getElementById(id); };
+  const viewStart = $('view-start'), viewQuiz = $('view-quiz'), viewResult = $('view-result');
+  const optionsEl = $('options'), qtextEl = $('qtext'), qnumEl = $('qnum');
+  const stepText = $('stepText'), barFill = $('barFill'), backBtn = $('backBtn');
+  const submitBtn = $('submitBtn'), loading = $('loading'), qfoot = $('qfoot');
+
+  function show(view){
+    [viewStart, viewQuiz, viewResult].forEach(function(v){ v.hidden = (v !== view); });
+  }
+
+  function renderProgress(){
+    const done = state.answers.filter(function(x){ return x !== null; }).length;
+    const cur = state.i + 1;
+    stepText.textContent = cur + ' / ' + QUESTIONS.length;
+    barFill.style.width = (cur / QUESTIONS.length * 100) + '%';
+    backBtn.classList.toggle('show', state.i > 0);
+    qfoot.textContent = done === QUESTIONS.length
+      ? '全部答完啦，可以看结果了'
+      : '选完会自动进入下一题，凭第一反应就好';
+  }
+
+  function renderQuestion(){
+    const q = QUESTIONS[state.i];
+    qnumEl.textContent = 'Q' + (state.i + 1);
+    qtextEl.textContent = q.q;
+    optionsEl.innerHTML = '';
+    submitBtn.hidden = !(state.i === QUESTIONS.length - 1 && state.answers[state.i] !== null);
+
+    q.opts.forEach(function(opt, idx){
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'option' + (state.answers[state.i] === idx ? ' sel' : '');
+      btn.setAttribute('aria-pressed', state.answers[state.i] === idx ? 'true' : 'false');
+
+      const tag = document.createElement('span');
+      tag.className = 'tag';
+      tag.textContent = 'ABCD'[idx];
+
+      const txt = document.createElement('span');
+      txt.className = 'txt';
+      txt.textContent = opt.t;
+
+      const tick = document.createElement('span');
+      tick.className = 'tick';
+
+      btn.appendChild(tag);
+      btn.appendChild(txt);
+      btn.appendChild(tick);
+      btn.addEventListener('click', function(){ pick(idx); });
+      optionsEl.appendChild(btn);
+    });
+
+    renderProgress();
+    // 只让题目内容淡入，避免整张卡片闪烁
+    [qtextEl, optionsEl].forEach(function(el){
+      el.classList.remove('fade');
+      void el.offsetWidth;
+      el.classList.add('fade');
+    });
+  }
+
+  function pick(idx){
+    if(state.locked) return;
+    state.answers[state.i] = idx;
+
+    // 点击反馈
+    Array.prototype.forEach.call(optionsEl.children, function(el, i){
+      el.classList.toggle('sel', i === idx);
+      el.setAttribute('aria-pressed', i === idx ? 'true' : 'false');
+    });
+
+    renderProgress();
+
+    if(state.i === QUESTIONS.length - 1){
+      submitBtn.hidden = false;
+      return;
+    }
+
+    state.locked = true;
+    setTimeout(function(){
+      state.locked = false;
+      state.i++;
+      renderQuestion();
+    }, 380);
+  }
+
+  function goBack(){
+    if(state.locked || state.i === 0) return;
+    state.i--;
+    renderQuestion();
+  }
+
+  function startTest(){
+    state.i = 0;
+    state.answers = new Array(QUESTIONS.length).fill(null);
+    state.locked = false;
+    show(viewQuiz);
+    renderQuestion();
+  }
+
+  function buildChips(n, att){
+    const chips = [];
+    chips.push('依恋倾向 · ' + ATT_LABEL[att]);
+    chips.push('靠近方式 · ' + (n.s >= .5 ? '主动' : '慢热'));
+    const top = Math.max(n.c, n.r, n.o);
+    chips.push('最常给出 · ' + (top === n.c ? '照顾' : top === n.r ? '稳定' : '新鲜感'));
+    return chips;
+  }
+
+  function showResult(){
+    const res = computeResult(state.answers);
+    const data = RESULTS[res.key];
+    state.resultKey = res.key;
+
+    $('resEn').textContent = data.en;
+    $('resName').textContent = data.name;
+    $('resWho').textContent = data.who;
+    $('resWhy').textContent = data.why;
+    $('resEgg').textContent = data.egg;
+    $('resSlogan').textContent = '「' + data.slogan + '」';
+
+    const chipsEl = $('resChips');
+    chipsEl.innerHTML = '';
+    buildChips(res.n, res.att).forEach(function(t){
+      const s = document.createElement('span');
+      s.className = 'chip';
+      s.textContent = t;
+      chipsEl.appendChild(s);
+    });
+
+    loading.hidden = true;
+    show(viewResult);
+    window.scrollTo(0, 0);
+  }
+
+  function submit(){
+    if(state.answers.some(function(x){ return x === null; })) return;
+    loading.hidden = false;
+    window.scrollTo(0, 0);
+    setTimeout(showResult, 1600);
+  }
+
+  // 复制 slogan
+  function copySlogan(){
+    const text = RESULTS[state.resultKey].name + '｜' + RESULTS[state.resultKey].slogan;
+    const btn = $('copyBtn');
+    const done = function(){
+      btn.textContent = '已复制，去发给朋友吧';
+      setTimeout(function(){ btn.textContent = '复制这句 slogan'; }, 1800);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done).catch(fallback);
+    } else {
+      fallback();
+    }
+    function fallback(){
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try{ document.execCommand('copy'); done(); }catch(e){ btn.textContent = '长按 slogan 复制'; }
+      document.body.removeChild(ta);
+    }
+  }
+
+  // 事件绑定
+  $('startBtn').addEventListener('click', startTest);
+  $('retestBtn').addEventListener('click', function(){
+    window.scrollTo(0, 0);
+    startTest();
+  });
+  backBtn.addEventListener('click', goBack);
+  submitBtn.addEventListener('click', submit);
+  $('copyBtn').addEventListener('click', copySlogan);
+
+  // 数字键 1-4 快速选择
+  document.addEventListener('keydown', function(e){
+    if(viewQuiz.hidden) return;
+    const k = parseInt(e.key, 10);
+    if(k >= 1 && k <= 4){ pick(k - 1); }
+    if(e.key === 'Backspace'){ goBack(); }
+  });
+})();
+</script>
+</body>
+</html>
